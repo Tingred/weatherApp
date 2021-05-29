@@ -1,0 +1,6 @@
+package pl.project.weather.location;
+
+public interface LocationRepository {
+
+    Location save(Location location);
+}
