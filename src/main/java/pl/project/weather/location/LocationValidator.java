@@ -15,10 +15,7 @@ public class LocationValidator {
     }
 
     public String validateRegion(String region) {
-        if(region==null){
-            throw new NullPointerException("Region cannot be null");
-        }
-        if (region.isBlank())
+        if (region==null || region.isBlank())
             return null;
         else return region;
     }
