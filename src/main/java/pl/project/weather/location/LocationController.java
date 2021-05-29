@@ -7,7 +7,6 @@ public class LocationController {
     private final LocationService locationService;
     private ObjectMapper objectMapper = new ObjectMapper();
 
-
     public LocationController(LocationService locationService) {
         this.locationService = locationService;
     }

@@ -21,7 +21,6 @@ public class LocationRepositoryImpl implements LocationRepository {
                 .buildSessionFactory();
     }
 
-
     @Override
     public Location save(Location location) {
         Session session = sessionFactory.openSession();

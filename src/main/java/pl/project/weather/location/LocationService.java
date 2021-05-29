@@ -14,7 +14,7 @@ public class LocationService {
     }
 
     Location addNewLocation(String cityName, Float longitude, Float latitude, String region, String country) {
-        LocationValidator locationValidator = new LocationValidator();
+        LocationValidator locationValidator = new LocationValidator();  // todo create this class once, it should be a LocationService field
         locationValidator.validateLocation(cityName, longitude, latitude, country);
 
         Location location = new Location(null, cityName, longitude, latitude,
