@@ -5,11 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class LocationService {
 
-    private final LocationRepositoryImpl locationRepository;
+    private final LocationRepository locationRepository;
     private ObjectMapper objectMapper = new ObjectMapper();
     private final LocationValidator locationValidator = new LocationValidator();
 
-    public LocationService(LocationRepositoryImpl locationRepository) throws IllegalArgumentException {
+    public LocationService(LocationRepository locationRepository) throws IllegalArgumentException {
         this.locationRepository = locationRepository;
         this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
