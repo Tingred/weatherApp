@@ -1,10 +1,9 @@
 package pl.project.weather;
 
-import pl.project.weather.location.Location;
 import pl.project.weather.location.LocationController;
 import pl.project.weather.location.LocationRepositoryImpl;
 import pl.project.weather.location.LocationService;
-import pl.project.weather.uInterface.UserInterface;
+import pl.project.weather.Interface.UserInterface;
 
 public class WeatherApplication {
 

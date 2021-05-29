@@ -1,4 +1,4 @@
-package pl.project.weather.uInterface; // todo just interface
+package pl.project.weather.Interface;
 
 import pl.project.weather.location.LocationController;
 
@@ -39,7 +39,7 @@ public class UserInterface {
         System.out.println("Write city name:");
         String cityName = scanner.nextLine();
         System.out.println("Write longitude:");
-        Float longtitude = scanner.nextFloat(); // todo typo -> longitude
+        Float longitude = scanner.nextFloat();
         scanner.nextLine();
         System.out.println("Write latitude:");
         Float latitude = scanner.nextFloat();
@@ -60,7 +60,7 @@ public class UserInterface {
         System.out.println();
 
         String httpResponseBody = locationController
-                .addNewLocation(cityName, longtitude, latitude,
+                .addNewLocation(cityName, longitude, latitude,
                         region, country);
         System.out.println("Server response: " + httpResponseBody);
         System.out.println();
