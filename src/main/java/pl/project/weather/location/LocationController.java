@@ -12,9 +12,9 @@ public class LocationController {
         this.locationService = locationService;
     }
 
-    public String addNewLocation(String cityName, Float logitude, Float latitude, String region, String country) {
+    public String addNewLocation(String cityName, Float longitude, Float latitude, String region, String country) {
         try {
-            Location newLocation = locationService.addNewLocation(cityName, logitude,
+            Location newLocation = locationService.addNewLocation(cityName, longitude,
                     latitude, region, country);
             return objectMapper.writeValueAsString(newLocation);
         } catch (Exception e) {
