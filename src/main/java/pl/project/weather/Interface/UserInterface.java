@@ -60,18 +60,15 @@ public class UserInterface {
         }
         System.out.println("Write country:");
         String country = scanner.nextLine();
-        System.out.println();
 
         String httpResponseBody = locationController
                 .addNewLocation(cityName, longitude, latitude,
                         region, country);
-        System.out.println("Server response: " + httpResponseBody);
-        System.out.println();
+        System.out.println("\nServer response: " + httpResponseBody+ "\n");
     }
 
     private void showAllLocations() {
-
-        String httpResponeBody = "";
-        System.out.println("Server response: " + httpResponeBody);
+        String httpResponeBody = locationController.getAllLocations();
+        System.out.println("\nServer response: " + httpResponeBody + "\n");
     }
 }

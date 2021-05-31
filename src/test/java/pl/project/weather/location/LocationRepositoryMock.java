@@ -14,4 +14,9 @@ public class LocationRepositoryMock implements LocationRepository{
         return location;
 
     }
+
+    @Override
+    public List<Location> getAll() {
+        return locations;
+    }
 }

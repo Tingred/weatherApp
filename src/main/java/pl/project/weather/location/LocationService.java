@@ -23,7 +23,7 @@ public class LocationService {
 
         return locationRepository.save(location);
     }
-    List<Location> getAllLocations(){
-        return locationRepository.getAll();
+    public List<Location> getAllLocations(){
+        return locationValidator.validateLocationList(locationRepository.getAll());
     }
 }
