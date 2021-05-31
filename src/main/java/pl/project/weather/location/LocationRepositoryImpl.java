@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public class LocationRepositoryImpl implements LocationRepository {
 
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
     public LocationRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
