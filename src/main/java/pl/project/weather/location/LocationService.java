@@ -3,6 +3,8 @@ package pl.project.weather.location;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.Optional;
+
 public class LocationService {
 
     private final LocationRepository locationRepository;
@@ -18,7 +20,6 @@ public class LocationService {
         locationValidator.validateLocation(cityName, longitude, latitude, country);
         Location location = new Location(null, cityName, longitude, latitude,
                 locationValidator.validateRegion(region), country);
-
         return locationRepository.save(location);
     }
 }

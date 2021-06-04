@@ -3,6 +3,7 @@ package pl.project.weather.forecast;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import pl.project.weather.exception.LocationEmptyException;
 import pl.project.weather.location.Location;
 import pl.project.weather.location.LocationRepository;
 
@@ -19,8 +20,7 @@ public class ForecastService {
     private ObjectMapper objectMapper = new ObjectMapper();
 
     public Forecast getForecast(Integer locationId, Integer date) {
-        Location location = locationRepository.findById(locationId).orElseThrow(() -> new RuntimeException("There is no location with id " + locationId));
-
+        Location location = locationRepository.findById(locationId).orElseThrow(() -> new LocationEmptyException("There is no location with id " + locationId));
 
         HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest httpRequest = HttpRequest.newBuilder()
@@ -33,10 +33,10 @@ public class ForecastService {
             objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             ForecastResponseDTO forecastResponseDTO = objectMapper.readValue(responseBody, ForecastResponseDTO.class);
 
-            LocalDate forcastDate = LocalDate.now().plusDays(date);
+            LocalDate forecastDay = LocalDate.now().plusDays(date);
 
             Forecast forecast = forecastResponseDTO.getDaily().stream()
-                    .filter(s -> s.getDate().equals(forcastDate))
+                    .filter(s -> s.getDate().equals(forecastDay))
                     .map(s -> Forecast.builder()
                             .temperature(s.getTemperature().getCelsius())
                             .pressure(s.getPressure())

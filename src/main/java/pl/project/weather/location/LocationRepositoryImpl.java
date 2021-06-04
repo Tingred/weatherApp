@@ -3,9 +3,6 @@ package pl.project.weather.location;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import java.util.Optional;
 
@@ -32,7 +29,11 @@ public class LocationRepositoryImpl implements LocationRepository {
 
     @Override
     public Optional<Location> findById(Integer id) {
-        // todo to implement
-        return Optional.empty();
+        Session session = sessionFactory.openSession();
+        Location location = session.createQuery("FROM locations l WHERE l.id = :id", Location.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        session.close();
+        return Optional.ofNullable(location);
     }
 }

@@ -1,5 +1,9 @@
 package pl.project.weather.location;
 
+import pl.project.weather.exception.LocationEmptyException;
+
+import java.util.Optional;
+
 public class LocationValidator {
 
     public void validateLocation(String cityName, Float longitude, Float latitude, String country) {
