@@ -17,6 +17,11 @@ public class LocationRepositoryMock implements LocationRepository {
     }
 
     @Override
+    public List<Location> getAll() {
+        return locations;
+    }
+
+    @Override
     public Optional<Location> findById(Integer id) {
         return locations.stream()
                 .filter(l -> l.getId().equals(id))

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Optional;
 
+import java.util.List;
+
 public class LocationService {
 
     private final LocationRepository locationRepository;
@@ -20,6 +22,10 @@ public class LocationService {
         locationValidator.validateLocation(cityName, longitude, latitude, country);
         Location location = new Location(null, cityName, longitude, latitude,
                 locationValidator.validateRegion(region), country);
+
         return locationRepository.save(location);
+    }
+    public List<Location> getAllLocations(){
+        return locationValidator.validateLocationList(locationRepository.getAll());
     }
 }

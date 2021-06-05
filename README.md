@@ -1,2 +1,2 @@
 # weatherApp
-Project of aplication, whitch is using three weather webside's to average informations about weather.
+Project of aplication, whitch is using weather webside to get informations about weather.

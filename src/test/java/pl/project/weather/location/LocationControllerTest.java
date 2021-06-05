@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class LocationControllerTest {
 
@@ -44,12 +43,12 @@ public class LocationControllerTest {
     @Test
     public void whenAddNewLocation_givenIncorrectCityNameValues_thenThrowsAnException() {
         //when
-        String result =  locationController.addNewLocation("", 35f, 34f, "region", "Germany");
-        String result2 =  locationController.addNewLocation(null, 35f, 34f, "region", "Germany");
+        String result = locationController.addNewLocation("", 35f, 34f, "region", "Germany");
+        String result2 = locationController.addNewLocation(null, 35f, 34f, "region", "Germany");
 
         //then
-        assertThat(result).isEqualTo("{\"error message\": \"" +"City name can't be null or empty"+ "\"}");
-        assertThat(result2).isEqualTo("{\"error message\": \"" +"City name can't be null or empty"+ "\"}");
+        assertThat(result).isEqualTo("{\"error message\": \"" + "City name can't be null or empty" + "\"}");
+        assertThat(result2).isEqualTo("{\"error message\": \"" + "City name can't be null or empty" + "\"}");
 
     }
 
@@ -60,8 +59,8 @@ public class LocationControllerTest {
         String result2 = locationController.addNewLocation("Berlin", -181f, 34f, "region", "Germany");
 
         //then
-        assertThat(result).isEqualTo("{\"error message\": \"" +"This longitude does not exist"+ "\"}");
-        assertThat(result2).isEqualTo("{\"error message\": \"" +"This longitude does not exist"+ "\"}");
+        assertThat(result).isEqualTo("{\"error message\": \"" + "This longitude does not exist" + "\"}");
+        assertThat(result2).isEqualTo("{\"error message\": \"" + "This longitude does not exist" + "\"}");
     }
 
     @Test
@@ -71,8 +70,8 @@ public class LocationControllerTest {
         String result2 = locationController.addNewLocation("Koln", 35f, -91f, "region", "Germany");
 
         //then
-        assertThat(result).isEqualTo("{\"error message\": \"" +"This latitude does not exist"+ "\"}");
-        assertThat(result2).isEqualTo("{\"error message\": \"" +"This latitude does not exist"+ "\"}");
+        assertThat(result).isEqualTo("{\"error message\": \"" + "This latitude does not exist" + "\"}");
+        assertThat(result2).isEqualTo("{\"error message\": \"" + "This latitude does not exist" + "\"}");
     }
 
     @Test
@@ -82,8 +81,8 @@ public class LocationControllerTest {
         String result2 = locationController.addNewLocation("Berlin", 35f, 34f, "region", null);
 
         //then
-        assertThat(result).isEqualTo("{\"error message\": \"" +"Country name can't be null or empty"+ "\"}");
-        assertThat(result2).isEqualTo("{\"error message\": \"" +"Country name can't be null or empty"+ "\"}");
+        assertThat(result).isEqualTo("{\"error message\": \"" + "Country name can't be null or empty" + "\"}");
+        assertThat(result2).isEqualTo("{\"error message\": \"" + "Country name can't be null or empty" + "\"}");
     }
 
     @Test
@@ -95,6 +94,29 @@ public class LocationControllerTest {
         //then
         assertThat(result).isEqualTo(jsonFromFingerResult);
         assertThat(result2).isEqualTo(jsonFromFingerResult);
+    }
+
+    @Test
+    public void whenGetAllLocations_givenEmptyList_thenReturnJsonFormatException() {
+        //when
+        String result = locationController.getAllLocations();
+
+        //then
+        assertThat(result).isEqualTo("{\"error message\": \"" + "There is no location added" + "\"}");
+    }
+
+    @Test
+    public void whenGetAllLocations_givenLocationList_thenReturnJsonFormatList(){
+        //given
+        String result = locationController.addNewLocation("Koblenz", 44.6f, 32.5f, null, "Germany");
+        String result2 = locationController.addNewLocation("Hamburg", 35.1f, 34.8f, null, "Germany");
+
+        //when
+        String jsonLocations = locationController.getAllLocations();
+
+        //then
+        assertThat(jsonLocations).contains(result);
+        assertThat(jsonLocations).contains(result2);
     }
 }
 

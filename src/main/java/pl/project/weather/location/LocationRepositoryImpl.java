@@ -5,6 +5,12 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import java.util.Optional;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.query.Query;
+
+import java.util.List;
 
 public class LocationRepositoryImpl implements LocationRepository {
 
@@ -35,5 +41,12 @@ public class LocationRepositoryImpl implements LocationRepository {
                 .getSingleResult();
         session.close();
         return Optional.ofNullable(location);
+    }
+    @Override
+    public List<Location> getAll(){
+        Session session = sessionFactory.openSession();
+        List<Location> locations = session.createQuery("FROM locations", Location.class).getResultList();
+        session.close();
+        return locations;
     }
 }
