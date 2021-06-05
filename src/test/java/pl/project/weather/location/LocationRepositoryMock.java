@@ -2,8 +2,9 @@ package pl.project.weather.location;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public class LocationRepositoryMock implements LocationRepository{
+public class LocationRepositoryMock implements LocationRepository {
 
     private List<Location> locations = new ArrayList<>();
 
@@ -19,4 +20,13 @@ public class LocationRepositoryMock implements LocationRepository{
     public List<Location> getAll() {
         return locations;
     }
+
+    @Override
+    public Optional<Location> findById(Integer id) {
+        return locations.stream()
+                .filter(l -> l.getId().equals(id))
+                .findFirst();
+    }
+
+    public void clear(){}
 }

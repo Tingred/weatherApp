@@ -3,6 +3,8 @@ package pl.project.weather.location;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+
+import java.util.Optional;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -12,16 +14,10 @@ import java.util.List;
 
 public class LocationRepositoryImpl implements LocationRepository {
 
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
-    public LocationRepositoryImpl() {
-        StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure()
-                .build();
-
-        sessionFactory = new MetadataSources(registry)
-                .buildMetadata()
-                .buildSessionFactory();
+    public LocationRepositoryImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
@@ -35,6 +31,16 @@ public class LocationRepositoryImpl implements LocationRepository {
         session.close();
 
         return location;
+    }
+
+    @Override
+    public Optional<Location> findById(Integer id) {
+        Session session = sessionFactory.openSession();
+        Location location = session.createQuery("FROM locations l WHERE l.id = :id", Location.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        session.close();
+        return Optional.ofNullable(location);
     }
     @Override
     public List<Location> getAll(){
