@@ -20,4 +20,12 @@ public class LocationController {
             return "{\"error message\": \"" + e.getMessage() + "\"}";
         }
     }
+
+    public String getAllLocations() {
+        try {
+            return objectMapper.writeValueAsString(locationService.getAllLocations());
+        } catch (Exception e) {
+            return "{\"error message\": \"" + e.getMessage() + "\"}";
+        }
+    }
 }

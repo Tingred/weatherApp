@@ -2,6 +2,9 @@ package pl.project.weather.location;
 
 import org.junit.Before;
 import org.junit.Test;
+import pl.project.weather.exception.CollectionEmptyException;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -31,10 +34,10 @@ public class LocationServiceTest {
     }
 
     @Test
-    public void whenAddNewLocation_givenCountryIsNullOrEmpty_thenThrowsAnException(){
+    public void whenAddNewLocation_givenCountryIsNullOrEmpty_thenThrowsAnException() {
         //when
-        Throwable result = catchThrowable(()-> locationService.addNewLocation("Poznań", 35f, 34f, "region", ""));
-        Throwable result2 = catchThrowable(()-> locationService.addNewLocation("Poznań", 35f, 34f, "region", null));
+        Throwable result = catchThrowable(() -> locationService.addNewLocation("Poznań", 35f, 34f, "region", ""));
+        Throwable result2 = catchThrowable(() -> locationService.addNewLocation("Poznań", 35f, 34f, "region", null));
 
         //then
         assertThat(result).isExactlyInstanceOf(RuntimeException.class);
@@ -42,10 +45,10 @@ public class LocationServiceTest {
     }
 
     @Test
-    public void whenAddNewLocation_givenCityNameIsNullOrEmpty_thenThrowsAnException(){
+    public void whenAddNewLocation_givenCityNameIsNullOrEmpty_thenThrowsAnException() {
         //when
-        Throwable result = catchThrowable(()-> locationService.addNewLocation(null, 35f, 34f, "region", "country"));
-        Throwable result2 = catchThrowable(()-> locationService.addNewLocation("", 35f, 34f, "region", "country"));
+        Throwable result = catchThrowable(() -> locationService.addNewLocation(null, 35f, 34f, "region", "country"));
+        Throwable result2 = catchThrowable(() -> locationService.addNewLocation("", 35f, 34f, "region", "country"));
 
         //then
         assertThat(result).isExactlyInstanceOf(RuntimeException.class);
@@ -53,12 +56,12 @@ public class LocationServiceTest {
     }
 
     @Test
-    public void whenAddNewLocation_givenLongitudeIsUnreal_thenThrowsAnException(){
+    public void whenAddNewLocation_givenLongitudeIsUnreal_thenThrowsAnException() {
         //when
-        Throwable result = catchThrowable(()-> locationService.addNewLocation("Poznań", 182f, 34f, "region", "Poland"));
-        Throwable result2 = catchThrowable(()-> locationService.addNewLocation("Poznań", -182f, 34f, "region", "Poland"));
-        Throwable result3 = catchThrowable(()-> locationService.addNewLocation("Poznań", 181f, 34f, "region", "Poland"));
-        Throwable result4 = catchThrowable(()-> locationService.addNewLocation("Poznań", -181f, 34f, "region", "Poland"));
+        Throwable result = catchThrowable(() -> locationService.addNewLocation("Poznań", 182f, 34f, "region", "Poland"));
+        Throwable result2 = catchThrowable(() -> locationService.addNewLocation("Poznań", -182f, 34f, "region", "Poland"));
+        Throwable result3 = catchThrowable(() -> locationService.addNewLocation("Poznań", 181f, 34f, "region", "Poland"));
+        Throwable result4 = catchThrowable(() -> locationService.addNewLocation("Poznań", -181f, 34f, "region", "Poland"));
 
         //then
         assertThat(result).isExactlyInstanceOf(IllegalArgumentException.class);
@@ -68,12 +71,12 @@ public class LocationServiceTest {
     }
 
     @Test
-    public void whenAddNewLocation_givenLatitudeIsUnreal_thenThrowsAnException(){
+    public void whenAddNewLocation_givenLatitudeIsUnreal_thenThrowsAnException() {
         //when
-        Throwable result = catchThrowable(()-> locationService.addNewLocation("Poznań", 179f, 92f, "region", "Poland"));
-        Throwable result2 = catchThrowable(()-> locationService.addNewLocation("Poznań", -179f, 91f, "region", "Poland"));
-        Throwable result3 = catchThrowable(()-> locationService.addNewLocation("Poznań", 178f, -92f, "region", "Poland"));
-        Throwable result4 = catchThrowable(()-> locationService.addNewLocation("Poznań", -178f, -91f, "region", "Poland"));
+        Throwable result = catchThrowable(() -> locationService.addNewLocation("Poznań", 179f, 92f, "region", "Poland"));
+        Throwable result2 = catchThrowable(() -> locationService.addNewLocation("Poznań", -179f, 91f, "region", "Poland"));
+        Throwable result3 = catchThrowable(() -> locationService.addNewLocation("Poznań", 178f, -92f, "region", "Poland"));
+        Throwable result4 = catchThrowable(() -> locationService.addNewLocation("Poznań", -178f, -91f, "region", "Poland"));
 
         //then
         assertThat(result).isExactlyInstanceOf(IllegalArgumentException.class);
@@ -83,7 +86,7 @@ public class LocationServiceTest {
     }
 
     @Test
-    public void whenAddNewLocation_givenRegionNullOrEmpty_thenReturnNull(){
+    public void whenAddNewLocation_givenRegionNullOrEmpty_thenReturnNull() {
         //when
         Location location = locationService.addNewLocation("Wrocław", 35f, 34f, "", "country");
         Location location2 = locationService.addNewLocation("Wrocław", 35f, 34f, null, "country");
@@ -91,5 +94,26 @@ public class LocationServiceTest {
         //then
         assertThat(location.getRegion()).isNull();
         assertThat(location2.getRegion()).isNull();
+    }
+
+    @Test
+    public void whenGetAllLocations_givenEmptyList_thenThrowsAnException() {
+        //when
+        Throwable result = catchThrowable(() -> locationService.getAllLocations());
+
+        //then
+        assertThat(result).isExactlyInstanceOf(CollectionEmptyException.class);
+    }
+
+    @Test
+    public void whenGetAllLocations_givenNotEmptyList_thenGetAllLocations() {
+        //when
+        Location location = locationService.addNewLocation("Kielce", 30f, 25f, "Slask", "Poland");
+        Location location2 = locationService.addNewLocation("Wrocław", 35f, 40f, null, "Poland");
+        List<Location> locations = locationService.getAllLocations();
+
+        //then
+        assertThat(locations).contains(location);
+        assertThat(locations).contains(location2);
     }
 }
